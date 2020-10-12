@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 import requests
 
-stock = Blueprint('stock', __name__, url_prefix='/stock')
+stock = Blueprint('stock', __name__)
 
 
 def fetch_price(ticker):
