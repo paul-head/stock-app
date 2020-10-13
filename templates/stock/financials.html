@@ -3,7 +3,12 @@
 
 {% block content %}
 <div class="container">
-    <table class="table">
+
+    <div class="row">
+        <img src="https://quickchart.io/chart?width=500&height=200&c={{chart_params}}" />
+    </div>
+
+    <table class="table mt-4">
 
         <thead>
         <tr>
@@ -19,8 +24,8 @@
         <tr>
             <th scope="row">{{ quarter["date"] }}</th>
             <td>{{ "${:,.2f}".format(quarter["revenue"] | float) }}</td>
-            <td>{{ quarter["grossProfitRatio"] | float | round(3) }}</td>
-            <td>${{ quarter["eps"] }}</td>
+            <td>{{ ((quarter["grossProfitRatio"] | float) * 100) | round(2) }}%</td>
+            <td>${{ quarter["eps"] | float | round(3) }}</td>
         </tr>
         {% endfor %}
         </tbody>
