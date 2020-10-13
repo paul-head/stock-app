@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from pprint import pprint
 import requests
 
 stock = Blueprint('stock', __name__)
@@ -27,4 +28,13 @@ def quote(ticker):
 @stock.route('/<string:ticker>/financials')
 def financials(ticker):
     data = fetch_income(ticker)
-    return render_template("stock/financials.html", ticker=ticker, financials=data)
+
+    chart_data = [float(q["eps"]) for q in data if q["eps"]]
+    chart_params = {
+        "type": "line",
+        "data": {
+            "labels": [q["date"] for q in data if q["eps"]],
+            "datasets": [{"label": 'EPS', "data": chart_data}]
+        }
+    }
+    return render_template('stock/financials.html', ticker=ticker, financials=data, chart_params=chart_params)
