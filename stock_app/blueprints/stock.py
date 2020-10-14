@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from pprint import pprint
+import os
 import requests
 
 stock = Blueprint('stock', __name__)
@@ -7,14 +7,14 @@ stock = Blueprint('stock', __name__)
 
 def fetch_price(ticker):
     data = requests.get(f'https://financialmodelingprep.com/api/v3/quote-short/{ticker.upper()}',
-                        params={"apikey": "5f05375cf0a7a36dda57008663befa65"})
+                        params={"apikey": os.getenv("STOCK_API_KEY")})
     return data.json()[0]['price']
 
 
 def fetch_income(ticker):
     financials = requests.get(f"https://financialmodelingprep.com/api/v3/income-statement/{ticker}",
                               params={'period': 'quarter',
-                                      'apikey': '5f05375cf0a7a36dda57008663befa65'}).json()  # ["financials"]
+                                      'apikey': os.getenv("STOCK_API_KEY")}).json()  # ["financials"]
     financials.sort(key=lambda quarter: quarter['date'])
     return financials
 
