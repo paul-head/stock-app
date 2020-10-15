@@ -2,7 +2,7 @@ import os
 
 
 class BaseConfig:
-    STOCK_API_KEY = os.getenv('STOCK_API_KEY')
+    STOCK_API_KEY = os.getenv("STOCK_API_KEY")
 
 
 class DevConfig(BaseConfig):
